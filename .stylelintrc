@@ -1,0 +1,14 @@
+{
+  "extends": ["stylelint-config-standard"],
+  "ignoreFiles": ["app/css/prism.css"],
+  "rules": {
+    "number-max-precision": 5,
+    "declaration-property-value-no-unknown": true,
+    "selector-class-pattern": null,
+    "keyframes-name-pattern": null,
+    "no-descending-specificity": null,
+    "no-duplicate-selectors": null,
+    "block-no-empty": null,
+    "shorthand-property-no-redundant-values": null
+  }
+}

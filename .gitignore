@@ -1,17 +1,25 @@
-lib-cov
-*.seed
-*.log
-*.csv
-*.dat
-*.out
-*.pid
-*.gz
-
-pids
-logs
-results
-
 node_modules
-npm-debug.log
-app/generated
 .DS_Store
+*.log
+.eslintcache
+.env
+.env.*
+
+# Yarn 4: commit the release binary, not the cache
+.yarn/*
+!.yarn/releases/
+!.yarn/patches/
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+.playwright-cli/
+
+# Coverage
+coverage/
+
+# Claude Code
+.claude/settings.local.json
+.claude/plans
