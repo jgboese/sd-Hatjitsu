@@ -20,7 +20,7 @@ If you are not adding tests, give the reason in one line. -->
 # Checklist
 
 - [ ] `yarn ci` passes
-- [ ] `yarn e2e` passes (required when the client in `app/` or the socket protocol changed)
+- [ ] `yarn e2e` passes (required when the client in `client/` or the socket protocol changed)
 - [ ] The socket protocol (event names, payloads, acknowledgements) stays compatible with the client
 
 # Evidence
