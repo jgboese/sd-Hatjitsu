@@ -31,5 +31,5 @@ COPY server ./server
 COPY --from=client /app/dist ./dist
 
 USER node
-EXPOSE 5000
+EXPOSE 4000
 CMD ["node", "server/index.ts"]

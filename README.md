@@ -20,13 +20,13 @@ yarn install
 yarn dev        # http://localhost:5173
 ```
 
-`yarn dev` runs the server with `--watch` and the Vite dev server (hot reload for the client), which proxies the socket to the server on `PORT` (default 5000). On macOS, the AirPlay Receiver may already be listening on port 5000; use `PORT=5001 yarn dev`.
+`yarn dev` runs the server with `--watch` and the Vite dev server (hot reload for the client), which proxies the socket to the server on `PORT` (default 4000).
 
 The server is TypeScript and runs directly with Node's built-in type stripping. The React client in `client/` is built by Vite into `dist/`, which the server serves in production: run `yarn build` before `yarn start`.
 
 | Command          | What it does                                                        |
 | ---------------- | ------------------------------------------------------------------- |
-| `yarn start`     | Run the server and serve the built client (`PORT`, default 5000)    |
+| `yarn start`     | Run the server and serve the built client (`PORT`, default 4000)    |
 | `yarn dev`       | Run the server with `--watch` and the Vite dev server               |
 | `yarn build`     | Build the client into `dist/`                                       |
 | `yarn ci`        | typecheck → format check → ESLint → Stylelint → unit tests → build  |
@@ -46,7 +46,7 @@ A pre-commit hook (husky + lint-staged) runs ESLint, Prettier and Stylelint on s
 docker compose up -d
 ```
 
-[http://localhost:5000](http://localhost:5000)
+[http://localhost:4000](http://localhost:4000)
 
 Rooms live in memory, so run a single instance.
 
