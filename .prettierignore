@@ -1,10 +1,8 @@
-# Vendored third-party code
-app/lib/
-
 # Design source files
 resources/
 
 # Generated output
+dist/
 .yarn/
 playwright-report/
 test-results/

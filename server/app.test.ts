@@ -1,6 +1,18 @@
+import { mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises';
 import type { AddressInfo } from 'node:net';
+import { tmpdir } from 'node:os';
+import path from 'node:path';
 import { io as connect, type Socket } from 'socket.io-client';
-import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
+import {
+  afterAll,
+  afterEach,
+  beforeAll,
+  beforeEach,
+  describe,
+  expect,
+  test,
+  vi,
+} from 'vitest';
 import { createServer } from './app.ts';
 import {
   INVALID_REQUEST,
@@ -17,8 +29,24 @@ let server: ReturnType<typeof createServer>;
 let baseUrl: string;
 const clients: ClientSocket[] = [];
 
+// A stand-in for the built client, so these tests do not depend on `yarn build`
+const INDEX_HTML = '<!doctype html><div id="root"></div>';
+let clientDir: string;
+
+beforeAll(async () => {
+  clientDir = await mkdtemp(path.join(tmpdir(), 'hatjitsu-client-'));
+  await mkdir(path.join(clientDir, 'assets'));
+  await writeFile(path.join(clientDir, 'index.html'), INDEX_HTML);
+  await writeFile(path.join(clientDir, 'assets', 'index-abc123.js'), '');
+  await writeFile(path.join(clientDir, 'robots.txt'), '');
+});
+
+afterAll(async () => {
+  await rm(clientDir, { recursive: true, force: true });
+});
+
 beforeEach(async () => {
-  server = createServer();
+  server = createServer({ clientDir });
   await new Promise<void>((resolve) => {
     server.httpServer.listen(0, resolve);
   });
@@ -70,7 +98,7 @@ describe('HTTP routes', () => {
     const res = await fetch(`${baseUrl}/`);
 
     expect(res.status).toBe(200);
-    expect(await res.text()).toContain('ng-app="pokerApp"');
+    expect(await res.text()).toBe(INDEX_HTML);
   });
 
   test('serves the app shell for an open room', async () => {
@@ -79,7 +107,7 @@ describe('HTTP routes', () => {
     const res = await fetch(`${baseUrl}/${roomUrl}`);
 
     expect(res.status).toBe(200);
-    expect(await res.text()).toContain('ng-app="pokerApp"');
+    expect(await res.text()).toBe(INDEX_HTML);
   });
 
   test('redirects unknown rooms to the lobby', async () => {
@@ -89,12 +117,16 @@ describe('HTTP routes', () => {
     expect(res.headers.get('location')).toBe('/');
   });
 
-  test('serves static assets and the Socket.IO client bundle', async () => {
-    const css = await fetch(`${baseUrl}/css/app.css`);
-    const client = await fetch(`${baseUrl}/socket.io/socket.io.min.js`);
+  test('caches hashed assets forever and other static files not at all', async () => {
+    const asset = await fetch(`${baseUrl}/assets/index-abc123.js`);
+    const robots = await fetch(`${baseUrl}/robots.txt`);
 
-    expect(css.status).toBe(200);
-    expect(client.status).toBe(200);
+    expect(asset.status).toBe(200);
+    expect(asset.headers.get('cache-control')).toBe(
+      'public, max-age=31536000, immutable',
+    );
+    expect(robots.status).toBe(200);
+    expect(robots.headers.get('cache-control')).toBe('public, max-age=0');
   });
 
   test('/debug_state reports stats and rooms', async () => {

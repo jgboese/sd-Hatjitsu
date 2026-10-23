@@ -1,0 +1,36 @@
+{
+  // The browser client, bundled by Vite. Same strictness as the server's tsconfig.json; it only
+  // imports types from the server (server/protocol.ts), never values.
+  "include": ["src/**/*"],
+  "compilerOptions": {
+    /* Language and Environment */
+    "target": "esnext",
+    "lib": ["ESNext", "DOM"],
+    "types": ["vite/client"],
+    "jsx": "react-jsx",
+
+    /* Modules */
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "noUncheckedSideEffectImports": true,
+
+    /* Emit */
+    "noEmit": true,
+
+    /* Interop Constraints */
+    "erasableSyntaxOnly": true,
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+    "forceConsistentCasingInFileNames": true,
+
+    /* Type Checking */
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "noFallthroughCasesInSwitch": true,
+
+    /* Completeness */
+    "skipLibCheck": true
+  }
+}

@@ -3,15 +3,15 @@ import js from '@eslint/js';
 import { defineConfig, globalIgnores } from 'eslint/config';
 import prettier from 'eslint-config-prettier';
 import jsdoc from 'eslint-plugin-jsdoc';
+import reactHooks from 'eslint-plugin-react-hooks';
 import unusedImports from 'eslint-plugin-unused-imports';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
 export default defineConfig([
   globalIgnores([
-    // Vendored third-party code
-    'app/lib/',
     // Generated output
+    'dist/',
     'playwright-report/',
     'test-results/',
     '.yarn/',
@@ -36,7 +36,7 @@ export default defineConfig([
     },
   },
   {
-    files: ['**/*.ts'],
+    files: ['**/*.{ts,tsx}'],
     extends: [tseslint.configs.recommendedTypeChecked],
     languageOptions: {
       parserOptions: { projectService: true },
@@ -86,12 +86,25 @@ export default defineConfig([
     },
   },
   {
-    // The AngularJS client is loaded as classic <script> tags. Cross-file globals are declared
-    // per file with /* global */ and /* exported */ comments.
-    files: ['app/js/**/*.js'],
+    files: ['client/**/*.{ts,tsx}'],
+    extends: [reactHooks.configs.flat.recommended],
     languageOptions: {
-      sourceType: 'script',
       globals: globals.browser,
+    },
+    rules: {
+      '@typescript-eslint/no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: ['**/server/*'],
+              allowTypeImports: true,
+              message:
+                'The client may only import types from the server; a value import would bundle server code (and zod) into the client.',
+            },
+          ],
+        },
+      ],
     },
   },
   {

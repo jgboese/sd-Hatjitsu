@@ -6,7 +6,6 @@ extend-exclude = [
   "*.gif",
   "*.ico",
   "*.psd",
-  "app/lib/**",
   "yarn.lock",
   ".yarn/releases/**",
 ]

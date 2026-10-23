@@ -1,5 +1,6 @@
 html,
-body {
+body,
+#root {
   height: 100%;
 }
 
@@ -154,21 +155,6 @@ a:focus {
 .header__logo--red {
   background-color: rgb(224 157 154);
   background-color: rgb(224 157 154 / 90%);
-}
-
-.no-svg .header__logo {
-  position: relative;
-}
-
-.no-svg .header__logo::after {
-  content: ' ';
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
-  background: url('/img/sun-mask.png') no-repeat center;
 }
 
 .roomNumber {
@@ -419,17 +405,8 @@ a:focus {
   color: #aaa;
 }
 
-.no-csstransforms3d .card--2-sided > .card--disabled,
-.no-csstransforms3d .card--2-sided.card--disabled {
-  background-color: rgb(224 217 207);
-}
-
 .card--2-sided.card--disabled > * {
   opacity: 0.5;
-}
-
-.no-csstransforms3d .card--2-sided.card--disabled > * {
-  opacity: 1;
 }
 
 .card--placeholder {
@@ -467,86 +444,62 @@ a:focus {
 }
 
 /* Step 1: by default, the second side is reversed */
-.csstransforms3d .card--side-2 {
+.card--side-2 {
   transform: rotateY(-180deg);
 }
 
 /* Step 2: adding .flipped to a parent triggers animation */
-.csstransforms3d .flipped .card--side-1 {
+.flipped .card--side-1 {
   transform: rotateY(-180deg);
 }
 
-.csstransforms3d .flipped .card--side-2 {
+.flipped .card--side-2 {
   transform: rotateX(0deg) rotateY(0deg);
-}
-
-.no-csstransforms3d .card--side-1 {
-  z-index: 2;
-}
-
-.no-csstransforms3d .card--side-2 {
-  z-index: 1;
-}
-
-.no-csstransforms3d .flipped .card--side-1 {
-  z-index: 1;
-}
-
-.no-csstransforms3d .flipped .card--side-2 {
-  z-index: 2;
 }
 
 /* Step 2b: adding .flipped-stagger to a parent triggers staggered animation */
-.csstransforms3d .flipped-stagger .card--side-1 {
+.flipped-stagger .card--side-1 {
   transform: rotateY(180deg);
 }
 
-.csstransforms3d .flipped-stagger .card--side-2 {
+.flipped-stagger .card--side-2 {
   transform: rotateX(0deg) rotateY(0deg);
 }
 
-.csstransforms3d .flipped-stagger .card:nth-child(1) > * {
+.flipped-stagger .card:nth-child(1) > * {
   transition-delay: 0.1s;
 }
 
-.csstransforms3d .flipped-stagger .card:nth-child(2) > * {
+.flipped-stagger .card:nth-child(2) > * {
   transition-delay: 0.2s;
 }
 
-.csstransforms3d .flipped-stagger .card:nth-child(3) > * {
+.flipped-stagger .card:nth-child(3) > * {
   transition-delay: 0.3s;
 }
 
-.csstransforms3d .flipped-stagger .card:nth-child(4) > * {
+.flipped-stagger .card:nth-child(4) > * {
   transition-delay: 0.4s;
 }
 
-.csstransforms3d .flipped-stagger .card:nth-child(5) > * {
+.flipped-stagger .card:nth-child(5) > * {
   transition-delay: 0.5s;
 }
 
-.csstransforms3d .flipped-stagger .card:nth-child(6) > * {
+.flipped-stagger .card:nth-child(6) > * {
   transition-delay: 0.6s;
 }
 
-.csstransforms3d .flipped-stagger .card:nth-child(7) > * {
+.flipped-stagger .card:nth-child(7) > * {
   transition-delay: 0.7s;
 }
 
-.csstransforms3d .flipped-stagger .card:nth-child(8) > * {
+.flipped-stagger .card:nth-child(8) > * {
   transition-delay: 0.8s;
 }
 
-.csstransforms3d .flipped-stagger .card > * {
+.flipped-stagger .card > * {
   transition-delay: 1s;
-}
-
-.no-csstransforms3d .flipped-stagger .card--side-1 {
-  z-index: 1;
-}
-
-.no-csstransforms3d .flipped-stagger .card--side-2 {
-  z-index: 2;
 }
 
 .vote.card {
@@ -738,23 +691,6 @@ a:focus {
   background-position: -28px 0;
 }
 
-.no-checked .switch .btn::before,
-.no-checked .switch .btn::after {
-  display: none;
-}
-
-.no-checked .switch .btn {
-  text-indent: 1.5em;
-  color: #333;
-}
-
-.no-checked .switch input {
-  width: auto;
-  height: auto;
-  top: 11px;
-  left: 2px;
-}
-
 .roomUrl {
   font-size: 16px;
   line-height: 31px;
@@ -901,10 +837,6 @@ a:focus {
   Surgical classes
 
 */
-.no-js-hide {
-  display: none;
-}
-
 .pullright {
   float: right;
 }
@@ -926,10 +858,6 @@ a:focus {
   height: 135px;
   top: 51px;
   left: -1%;
-}
-
-.no-svg .bg-mount {
-  z-index: 2;
 }
 
 .bg-tree {

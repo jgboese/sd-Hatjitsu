@@ -10,13 +10,19 @@ import {
   type Stats,
 } from './sockets.ts';
 
-const APP_DIR = path.join(import.meta.dirname, '..', 'app');
+/** Options for {@link createServer}. */
+export interface ServerOptions {
+  /** The built client to serve; defaults to the output of `yarn build` */
+  clientDir?: string;
+}
 
 /**
  * Builds the HTTP + Socket.IO server without listening, so tests can bind it to any port.
  * Room state lives in memory, so run a single instance.
  */
-export function createServer() {
+export function createServer({
+  clientDir = path.join(import.meta.dirname, '..', 'dist'),
+}: ServerOptions = {}) {
   const lobby = new Lobby();
   const stats: Stats = {
     connectionCount: 0,
@@ -28,10 +34,18 @@ export function createServer() {
   const app = express();
   app.disable('x-powered-by');
   app.use(compression());
-  app.use(express.static(APP_DIR, { index: false }));
+  // Vite puts a content hash in every file name under assets/, so they can be cached forever
+  app.use(
+    '/assets',
+    express.static(path.join(clientDir, 'assets'), {
+      immutable: true,
+      maxAge: '1y',
+    }),
+  );
+  app.use(express.static(clientDir, { index: false }));
 
   const sendIndex = (_req: express.Request, res: express.Response) => {
-    res.sendFile('index.html', { root: APP_DIR });
+    res.sendFile('index.html', { root: clientDir });
   };
 
   app.get('/', sendIndex);
@@ -52,7 +66,8 @@ export function createServer() {
   });
 
   const httpServer = createHttpServer(app);
-  const io: HatjitsuServer = new Server(httpServer);
+  // The client bundles socket.io-client, so the server does not need to serve it
+  const io: HatjitsuServer = new Server(httpServer, { serveClient: false });
   registerSocketHandlers(io, lobby, stats);
 
   return { httpServer, io, lobby };
