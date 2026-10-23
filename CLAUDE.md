@@ -26,7 +26,7 @@ Run `yarn format`, `yarn typecheck` and `yarn eslint` after writing or changing 
 
 - `server/`: Node.js server (TypeScript, Express 5 + Socket.IO 4)
 - `app/`: browser client served as static files (AngularJS 1.0, plain JavaScript)
-  - `app/js/`: application scripts; `app/lib/`, `app/js/prism.js` and `app/js/sg.js` are vendored and excluded from lint/format
+  - `app/js/`: application scripts; `app/lib/` is vendored and excluded from lint/format
   - `app/partials/`: AngularJS route templates
   - `app/css/app.css`: all app styles
 - `e2e/`: Playwright tests (`*.e2e.ts`) and shared fixtures

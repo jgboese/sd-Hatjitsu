@@ -43,10 +43,6 @@ export function createServer() {
     });
   });
 
-  app.get('/styleguide', (_req, res) => {
-    res.sendFile('styleguide.html', { root: APP_DIR });
-  });
-
   app.get('/:id', (req, res) => {
     if (lobby.getRoom(req.params.id)) {
       sendIndex(req, res);

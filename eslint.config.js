@@ -11,8 +11,6 @@ export default defineConfig([
   globalIgnores([
     // Vendored third-party code
     'app/lib/',
-    'app/js/prism.js',
-    'app/js/sg.js',
     // Generated output
     'playwright-report/',
     'test-results/',
