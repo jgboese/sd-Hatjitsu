@@ -7,12 +7,12 @@ description: Create or edit Playwright e2e tests. Use when writing end-to-end te
 
 ## Overview
 
-Playwright tests drive the real AngularJS client against a locally started server. They are the main safety net for the browser client and for the client/server socket protocol.
+Playwright tests drive the real React client (a production build) against a locally started server. They are the main safety net for the browser client and for the client/server socket protocol.
 
 ## Environment
 
 - Config: @playwright.config.ts
-  - `webServer` starts the app on port 5055 before the run; tests use the configured `baseURL`, so navigate with relative paths
+  - `webServer` builds the client (`yarn build`) and starts the app on port 5055 before the run; tests use the configured `baseURL`, so navigate with relative paths. Outside CI an app already listening on 5055 is reused as is, so stop a stale one after changing the client
   - Browser: Chromium only
   - `workers: 1`: creating a room discards every room nobody has joined yet, so parallel tests against the shared server would delete each other's rooms
 - Install the browser once per Playwright version: `yarn playwright install chromium`
@@ -33,7 +33,7 @@ Always import `test` and `expect` from the fixtures, not from `@playwright/test`
 import { createRoom, expect, test } from './fixtures.ts';
 ```
 
-The fixture's `test` fails any test whose pages log an uncaught error **or a `console.error`**. AngularJS swallows its own exceptions (e.g. injector errors) and only reports them via `console.error`, so without this guard a broken client can still pass every assertion. Do not filter these errors out to make a test pass; fix the cause.
+The fixture's `test` fails any test whose pages log an uncaught error **or a `console.error`**. React reports some errors (e.g. ones it recovers from) only through `console.error`, so without this guard a broken client can still pass every assertion. Do not filter these errors out to make a test pass; fix the cause.
 
 ### Several participants: `joinAs`
 
