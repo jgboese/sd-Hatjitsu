@@ -5,7 +5,7 @@
 ### Setup
 
 - Node.js 24 (`.node-version`), Yarn 4 (committed in `.yarn/releases`)
-- `yarn install`, then `yarn dev`: the server (restarts on changes) plus the Vite dev server on http://localhost:5173, which proxies the socket and `/debug_state` to the server on `PORT` (default 5000; on macOS the AirPlay Receiver may hold 5000, so use `PORT=5001 yarn dev`)
+- `yarn install`, then `yarn dev`: the server (restarts on changes) plus the Vite dev server on http://localhost:5173, which proxies the socket and `/debug_state` to the server on `PORT` (default 4000)
 - `yarn build` builds the client into `dist/`; `yarn start` serves it, so build first
 - Before the first `yarn e2e`: `yarn playwright install chromium`
 
