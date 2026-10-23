@@ -1,23 +1,27 @@
-/*jslint browser: true */
-/*global Modernizr */
+/* global Modernizr */
 
-Modernizr.addTest('checked', function () {
-  return Modernizr.testStyles("#modernizr div {width:10px;} #modernizr input:checked ~ div {width: 20px;}", function (elem) {
-    var chx = document.createElement('input'),
-      div = document.createElement('div');
+'use strict';
 
-    chx.setAttribute("type", "checkbox");
-    chx.setAttribute("checked", "checked");
-    elem.appendChild(chx);
-    elem.appendChild(div);
+Modernizr.addTest('checked', () =>
+  Modernizr.testStyles(
+    '#modernizr div {width:10px;} #modernizr input:checked ~ div {width: 20px;}',
+    (elem) => {
+      const chx = document.createElement('input');
+      const div = document.createElement('div');
 
-    return elem.lastChild.offsetWidth > 10;
-  });
-});
+      chx.setAttribute('type', 'checkbox');
+      chx.setAttribute('checked', 'checked');
+      elem.appendChild(chx);
+      elem.appendChild(div);
+
+      return elem.lastChild.offsetWidth > 10;
+    },
+  ),
+);
 
 Modernizr.load([
   {
-    test : Modernizr.mq('only all'),
-    nope : '/lib/respond.min.js'
-  }
+    test: Modernizr.mq('only all'),
+    nope: '/lib/respond.min.js',
+  },
 ]);

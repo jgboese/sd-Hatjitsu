@@ -1,0 +1,38 @@
+{
+  // The server runs directly from .ts sources with Node's native type stripping (no build step),
+  // so only erasable TypeScript syntax is allowed and imports carry their .ts extension.
+  // https://nodejs.org/docs/latest-v24.x/api/typescript.html#type-stripping
+  //
+  // The browser client in app/ is plain script-mode JavaScript and is not type-checked.
+  "include": ["server/**/*", "e2e/**/*", "*.ts"],
+  "compilerOptions": {
+    /* Language and Environment */
+    "target": "esnext",
+    "lib": ["ESNext"],
+    "types": ["node"],
+
+    /* Modules */
+    "module": "nodenext",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "noUncheckedSideEffectImports": true,
+
+    /* Emit */
+    "noEmit": true,
+
+    /* Interop Constraints */
+    "erasableSyntaxOnly": true,
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+    "forceConsistentCasingInFileNames": true,
+
+    /* Type Checking */
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "noFallthroughCasesInSwitch": true,
+
+    /* Completeness */
+    "skipLibCheck": true
+  }
+}

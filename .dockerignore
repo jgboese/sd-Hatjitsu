@@ -1,0 +1,8 @@
+*
+!package.json
+!yarn.lock
+!.yarnrc.yml
+!.yarn/releases/
+!server/
+!app/
+server/**/*.test.ts

@@ -1,0 +1,24 @@
+[files]
+extend-exclude = [
+  "*.log",
+  "*.min.js",
+  "*.png",
+  "*.gif",
+  "*.ico",
+  "*.psd",
+  "app/lib/**",
+  "app/js/prism.js",
+  "app/css/prism.css",
+  "yarn.lock",
+  ".yarn/releases/**",
+]
+
+[default]
+extend-ignore-re = [
+  # 6-digit hex colours (e.g. "afe7ff" contains "afe", which typos reads as a typo of "safe")
+  "\\b[0-9a-fA-F]{6}\\b",
+]
+
+[default.extend-words]
+# Deliberate slang in the styleguide copy ("calculatin' machines")
+calculatin = "calculatin"

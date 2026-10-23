@@ -1,0 +1,48 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    "abandonments:recommended",
+    "helpers:pinGitHubActionDigests"
+  ],
+  "prConcurrentLimit": 5,
+  "timezone": "Asia/Tokyo",
+  "minimumReleaseAge": "14 days",
+  "labels": ["dependencies"],
+  "packageRules": [
+    {
+      "description": "Automerge dev tools updates",
+      "matchPackageNames": [
+        "eslint*",
+        "@eslint/*",
+        "typescript-eslint",
+        "@types/*",
+        "stylelint*",
+        "prettier",
+        "vitest",
+        "vite",
+        "knip",
+        "lint-staged",
+        "@playwright/*",
+        "typescript"
+      ],
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true
+    },
+    {
+      "description": "Automerge patch updates",
+      "matchUpdateTypes": ["patch"],
+      "automerge": true
+    },
+    {
+      "description": "Update .node-version, the Dockerfile base image, engines and @types/node together so CI, Docker and local never run mixed Node.js versions",
+      "matchDepNames": ["node", "@types/node"],
+      "groupName": "Node.js"
+    },
+    {
+      "description": "typescript (TS 6) is what typescript-eslint and editors load; typescript-eslint does not support TS 7 yet. `yarn typecheck` already uses TS 7 through the typescript7 alias",
+      "matchDepNames": ["typescript"],
+      "allowedVersions": "<7.0.0"
+    }
+  ]
+}

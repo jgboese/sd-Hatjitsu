@@ -1,7 +1,7 @@
 <div ng-init="configureRoom()">
   <p class="roomNumber">Room: {{roomId}}</p>
 
-  <section class="cardPanel" >
+  <section class="cardPanel">
     <div class="row cardPanel-meta">
       <div class="span2 subheading">
         <div ng-show="voter">
@@ -13,42 +13,94 @@
       </div>
       <div ng-switch on="showAdmin" class="span2 pullright">
         <div ng-switch-when="true">
-            <div id="dd" class="dropdown-wrapper btn">
-              <span>Mountain Goat pack</span>
-              <ul class="dropdown">
-                <li class="dropdown__item"><a href="#" ng-model="cardPack" id="deckGoat" ng-click="setCardPack('goat')">Mountain Goat</a></li>
-                <li class="dropdown__item"><a href="#" ng-model="cardPack" id="deckFib" ng-click="setCardPack('fib')">Fibonacci</a></li>
-                <li class="dropdown__item"><a href="#" ng-model="cardPack" id="deckSeq" ng-click="setCardPack('seq')">Sequential</a></li>
-                <li class="dropdown__item"><a href="#" ng-model="cardPack" id="deckPlay" ng-click="setCardPack('play')">Playing Cards</a></li>
-                <li class="dropdown__item"><a href="#" ng-model="cardPack" id="deckShirt" ng-click="setCardPack('tshirt')">T-Shirt</a></li>
-              </ul>
-            </div>
+          <div id="dd" class="dropdown-wrapper btn">
+            <span>Mountain Goat pack</span>
+            <ul class="dropdown">
+              <li class="dropdown__item">
+                <a
+                  href="#"
+                  ng-model="cardPack"
+                  id="deckGoat"
+                  ng-click="setCardPack('goat')"
+                  >Mountain Goat</a
+                >
+              </li>
+              <li class="dropdown__item">
+                <a
+                  href="#"
+                  ng-model="cardPack"
+                  id="deckFib"
+                  ng-click="setCardPack('fib')"
+                  >Fibonacci</a
+                >
+              </li>
+              <li class="dropdown__item">
+                <a
+                  href="#"
+                  ng-model="cardPack"
+                  id="deckSeq"
+                  ng-click="setCardPack('seq')"
+                  >Sequential</a
+                >
+              </li>
+              <li class="dropdown__item">
+                <a
+                  href="#"
+                  ng-model="cardPack"
+                  id="deckPlay"
+                  ng-click="setCardPack('play')"
+                  >Playing Cards</a
+                >
+              </li>
+              <li class="dropdown__item">
+                <a
+                  href="#"
+                  ng-model="cardPack"
+                  id="deckShirt"
+                  ng-click="setCardPack('tshirt')"
+                  >T-Shirt</a
+                >
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
 
-
     <div class="cards{{cardsState}}">
-      <div ng-show="cards" ng-repeat="card in cards" ng-click="vote(card)" class="card" ng-class="{'card--selected' : card==myVote}" cardvalue>
+      <div
+        ng-show="cards"
+        ng-repeat="card in cards"
+        ng-click="vote(card)"
+        class="card"
+        ng-class="{'card--selected' : card==myVote}"
+        cardvalue
+      >
         {{card}}
       </div>
-      <div ng-hide="cards" class="waiting">
-        No cards found
-      </div>
+      <div ng-hide="cards" class="waiting">No cards found</div>
     </div>
-
   </section>
 
-  <section class="votePanel" >
+  <section class="votePanel">
     <!-- <span class="sub">Humans: <span class="label">{{humanCount}}</span></span> -->
 
     <div class="switch">
-      <input type="checkbox" ng-model="voter" ng-disabled="forceRevealDisable" ng-change="toggleVoter()">
-      <label class="btn" data-on="You are a voter" data-off="You are not a voter">I am voting</label>
+      <input
+        type="checkbox"
+        ng-model="voter"
+        ng-disabled="forceRevealDisable"
+        ng-change="toggleVoter()"
+      />
+      <label
+        class="btn"
+        data-on="You are a voter"
+        data-off="You are not a voter"
+        >I am voting</label
+      >
     </div>
 
     <div ng-switch on="voter">
-
       <div ng-switch-when="false">
         <p>&nbsp;</p>
       </div>
@@ -59,12 +111,15 @@
           <p ng-switch-when="true">Your current estimate: <b>{{myVote}}</b></p>
         </div>
       </div>
-
     </div>
 
     <div class="cards{{votingState}}" id="chosenCards">
-
-      <div ng-repeat="vote in votes" ng-click="unvote(vote.sessionId)" class="card card--2-sided vote" selectedvote>
+      <div
+        ng-repeat="vote in votes"
+        ng-click="unvote(vote.sessionId)"
+        class="card card--2-sided vote"
+        selectedvote
+      >
         <div class="card--side-1">x</div>
         <div class="card--side-2" cardvalue>{{vote.visibleVote}}</div>
       </div>
@@ -72,27 +127,39 @@
         &nbsp;
       </div>
 
-      <div ng-show="showAverage" class="voting-average">Average: <b>{{votingAverage}} (StdDev = {{votingStandardDeviation}})</b></div>
+      <div ng-show="showAverage" class="voting-average">
+        Average: <b>{{votingAverage}} (StdDev = {{votingStandardDeviation}})</b>
+      </div>
     </div>
 
-    <div ng-switch on="showAdmin" >
-
+    <div ng-switch on="showAdmin">
       <div ng-switch-when="true">
         <div class="row">
-          <button ng-click="resetVote()" class="span2 btn" title="Start a new vote">
+          <button
+            ng-click="resetVote()"
+            class="span2 btn"
+            title="Start a new vote"
+          >
             <i class="icon icon-refresh"></i> Reset
           </button>
-          <button ng-click="forceReveal()" class="span2 btn" ng-disabled="forceRevealDisable" title="Force a reveal of all cards if there are some stragglers" >
+          <button
+            ng-click="forceReveal()"
+            class="span2 btn"
+            ng-disabled="forceRevealDisable"
+            title="Force a reveal of all cards if there are some stragglers"
+          >
             <i class="icon icon-exclamation-sign"></i> Reveal
           </button>
-          <button ng-click="sortVotes()" class="span2 btn" ng-disabled="sortVotesDisable" title="Sort votes in order of cards in deck" >
+          <button
+            ng-click="sortVotes()"
+            class="span2 btn"
+            ng-disabled="sortVotesDisable"
+            title="Sort votes in order of cards in deck"
+          >
             <i class="icon"><span class="icon-sort"></span></i> Sort votes
           </button>
         </div>
       </div>
-
     </div>
-
   </section>
-
 </div>

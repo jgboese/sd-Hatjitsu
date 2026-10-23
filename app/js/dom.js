@@ -1,7 +1,9 @@
-/*jslint indent: 2, browser: true */
-/*global angular, $, document */
+/* global $ */
+/* exported DropDown, ScrollIntoView */
 
-$(function () {
+'use strict';
+
+$(() => {
   $('.no-js-hide').removeClass('no-js-hide');
 });
 
@@ -11,26 +13,26 @@ function DropDown(el) {
   this.initEvents();
 }
 DropDown.prototype = {
-  initEvents : function () {
-    var obj = this;
-    $(document).on('click', this.dd, function (event) {
+  initEvents() {
+    const obj = this;
+    $(document).on('click', this.dd, function () {
       $(this).toggleClass('active');
       return false;
     });
     $(document).on('click', '.dropdown > li', function () {
-      $('span', obj.dd).text($(this).text() + ' pack');
+      $('span', obj.dd).text(`${$(this).text()} pack`);
     });
-    $(document).click(function () {
+    $(document).click(() => {
       $('.dropdown-wrapper', obj.dd).removeClass('active');
     });
-  }
+  },
 };
 
 function ScrollIntoView(el) {
   this.el = el;
 }
 ScrollIntoView.prototype = {
-  now : function () {
-    $('body').animate({ scrollTop : this.el.offset().top }, 'slow');
-  }
+  now() {
+    $('body').animate({ scrollTop: this.el.offset().top }, 'slow');
+  },
 };
