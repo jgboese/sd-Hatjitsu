@@ -107,6 +107,13 @@ a:focus {
   background-repeat: no-repeat;
 }
 
+@media (resolution >= 2dppx) {
+  .header__text {
+    background-image: url('/img/title@2x.png');
+    background-size: 153px 55px;
+  }
+}
+
 @media screen and (width >= 17em) {
   .header__text {
     position: relative;
