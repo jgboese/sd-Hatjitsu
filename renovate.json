@@ -21,6 +21,8 @@
         "prettier",
         "vitest",
         "vite",
+        "@vitejs/plugin-react",
+        "concurrently",
         "knip",
         "lint-staged",
         "@playwright/*",
@@ -33,6 +35,16 @@
       "description": "Automerge patch updates",
       "matchUpdateTypes": ["patch"],
       "automerge": true
+    },
+    {
+      "description": "Update React and its type definitions together, so react, react-dom and their types never run mixed versions",
+      "matchPackageNames": [
+        "react",
+        "react-dom",
+        "@types/react",
+        "@types/react-dom"
+      ],
+      "groupName": "React"
     },
     {
       "description": "Update .node-version, the Dockerfile base image, engines and @types/node together so CI, Docker and local never run mixed Node.js versions",

@@ -18,8 +18,8 @@ interface Fixtures {
 
 /**
  * `test` with a `joinAs` fixture. Any uncaught error or console error on a participant's page
- * fails the test, so client-side breakage (for example an AngularJS injector error) is caught
- * even when the assertions would otherwise pass.
+ * fails the test, so client-side breakage (for example an error React only logs) is caught even
+ * when the assertions would otherwise pass.
  */
 export const test = base.extend<Fixtures>({
   joinAs: async ({ browser }, use) => {
@@ -31,7 +31,7 @@ export const test = base.extend<Fixtures>({
       contexts.push(context);
       const page = await context.newPage();
       page.on('pageerror', (error) => pageErrors.push(error.message));
-      // AngularJS catches its own errors and reports them through console.error
+      // React reports errors it recovers from (and failed renders) through console.error
       page.on('console', (message) => {
         if (message.type() === 'error') pageErrors.push(message.text());
       });

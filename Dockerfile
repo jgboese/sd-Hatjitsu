@@ -1,10 +1,25 @@
+# The root postinstall sets up git hooks with husky, which neither stage needs, so both drop it
+# from their copy of package.json.
+
+# Build the client with Vite. Its libraries are dev dependencies: they end up in the bundle.
+FROM node:24.22.1-alpine AS client
+
+WORKDIR /app
+COPY package.json yarn.lock .yarnrc.yml ./
+COPY .yarn/releases ./.yarn/releases
+RUN npm pkg delete scripts.postinstall \
+  && node .yarn/releases/yarn-4.18.1.cjs install --immutable
+
+COPY vite.config.ts ./
+COPY client ./client
+RUN node .yarn/releases/yarn-4.18.1.cjs build
+
+# The server, with production dependencies only.
 FROM node:24.22.1-alpine
 
 ENV NODE_ENV=production
 WORKDIR /app
 
-# Production dependencies only. The root postinstall sets up git hooks with husky, a dev
-# dependency that is not installed here, so drop it from the image's copy of package.json.
 COPY package.json yarn.lock .yarnrc.yml ./
 COPY .yarn/releases ./.yarn/releases
 RUN npm pkg delete scripts.postinstall \
@@ -13,7 +28,7 @@ RUN npm pkg delete scripts.postinstall \
 
 # The server runs straight from its TypeScript sources via Node's type stripping.
 COPY server ./server
-COPY app ./app
+COPY --from=client /app/dist ./dist
 
 USER node
 EXPOSE 5000

@@ -16,8 +16,8 @@ description: Create a draft pull request for the current branch. Checks the bran
    - Confirm the branch is pushed (`git rev-parse --abbrev-ref --symbolic-full-name @{u}`); if not, ask before pushing
 
 3. **Run the checks**
-   - `yarn ci` (typecheck → format:check → eslint → stylelint → test). Do not open the PR while it fails; fix or report the failures first.
-   - If the change touches the client (`app/`) or the socket protocol (`server/protocol.ts`, `server/sockets.ts`), also run `yarn e2e`.
+   - `yarn ci` (typecheck → format:check → eslint → stylelint → test → build). Do not open the PR while it fails; fix or report the failures first.
+   - If the change touches the client (`client/`) or the socket protocol (`server/protocol.ts`, `server/sockets.ts`), also run `yarn e2e`.
 
 4. **Write the description**
    - Read `.github/PULL_REQUEST_TEMPLATE.md` and fill in each section in English, based only on the commits unique to this branch

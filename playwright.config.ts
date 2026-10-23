@@ -17,7 +17,8 @@ export default defineConfig({
   },
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
   webServer: {
-    command: 'node server/index.ts',
+    // Always test a fresh production build of the client
+    command: 'yarn build && node server/index.ts',
     url: `http://localhost:${PORT}`,
     env: { PORT: String(PORT) },
     reuseExistingServer: !process.env.CI,

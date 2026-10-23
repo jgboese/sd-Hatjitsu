@@ -17,6 +17,9 @@ node_modules
 /playwright/.cache/
 .playwright-cli/
 
+# Client build
+/dist/
+
 # Coverage
 coverage/
 

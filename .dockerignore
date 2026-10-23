@@ -4,5 +4,7 @@
 !.yarnrc.yml
 !.yarn/releases/
 !server/
-!app/
+!client/
+!vite.config.ts
 server/**/*.test.ts
+client/**/*.test.ts

@@ -1,19 +1,19 @@
 ---
 name: unit-test
-description: Create unit and integration tests for the server. Use when writing or editing Vitest tests for Room, Lobby, the socket protocol, or the HTTP routes, following this repo's testing conventions.
+description: Create unit and integration tests for the server and the client's pure logic. Use when writing or editing Vitest tests for Room, Lobby, the socket protocol, the HTTP routes, or client/src modules without React (such as voting.ts), following this repo's testing conventions.
 ---
 
 # Unit Tests
 
 ## Overview
 
-Write Vitest tests for the server code in `server/`. The browser client in `app/` is covered by Playwright e2e tests instead (see the `e2e-test` skill).
+Write Vitest tests for the server code in `server/`, and for client code that does not use React (e.g. `client/src/voting.ts`). React components are covered by Playwright e2e tests instead (see the `e2e-test` skill).
 
 ## Steps
 
 - **Create the test file**
   - File name: `{target file name}.test.ts`
-  - Put it next to the file under test (e.g. `server/room.ts` → `server/room.test.ts`)
+  - Put it next to the file under test (e.g. `server/room.ts` → `server/room.test.ts`, `client/src/voting.ts` → `client/src/voting.test.ts`)
 - Run the single file, then the project checks:
 
   ```bash
@@ -123,7 +123,11 @@ test('a second participant is told when someone joins', async () => {
 
 ### HTTP routes
 
-Use the same `createServer()` + ephemeral port setup and Node's global `fetch`. Pass `redirect: 'manual'` when asserting on redirects.
+Use the same `createServer()` + ephemeral port setup and Node's global `fetch`. Pass `redirect: 'manual'` when asserting on redirects. `server/app.test.ts` passes `createServer({ clientDir })` a temporary directory with a stub `index.html` and asset, so the tests do not need `yarn build`; add any files a new route serves there.
+
+### Client logic
+
+Modules in `client/src` that do not use React or the DOM (e.g. `voting.ts`) run in the same node environment. Build their inputs with small factory functions (see `room()` in `client/src/voting.test.ts`) and assert on the returned values. Do not import `socket.ts` or anything that uses it: it opens a connection when imported.
 
 ## Conventions
 

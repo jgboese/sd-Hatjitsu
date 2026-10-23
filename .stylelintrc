@@ -1,6 +1,5 @@
 {
   "extends": ["stylelint-config-standard"],
-  "ignoreFiles": ["app/css/prism.css"],
   "rules": {
     "number-max-precision": 5,
     "declaration-property-value-no-unknown": true,

@@ -1,13 +1,8 @@
-# Vendored third-party code
-app/lib/
-app/js/prism.js
-app/js/sg.js
-app/css/prism.css
-
 # Design source files
 resources/
 
 # Generated output
+dist/
 .yarn/
 playwright-report/
 test-results/
