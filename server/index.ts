@@ -1,6 +1,6 @@
 import { createServer } from './app.ts';
 
-const port = Number(process.env.PORT ?? 5000);
+const port = Number(process.env.PORT ?? 4000);
 const { httpServer, io } = createServer();
 
 httpServer.listen(port, () => {
